@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>DAV PUBLIC SCHOOL MATHURAPUR - DBMS MCQ</title>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f6f9;
+    margin: 0;
+    padding: 0;
+}
+.container {
+    width: 80%;
+    margin: auto;
+    margin-top: 30px;
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+.school {
+    text-align: center;
+    font-size: 26px;
+    font-weight: bold;
+    color: #0b5394;
+}
+.sub {
+    text-align: center;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+.option {
+    padding: 10px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.option:hover {
+    background: #f1f1f1;
+}
+.correct {
+    background-color: #c6efce;
+    border-color: green;
+}
+.wrong {
+    background-color: #f4cccc;
+    border-color: red;
+}
+button {
+    padding: 10px 20px;
+    margin: 15px 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+#scoreBox {
+    font-size: 20px;
+    text-align: center;
+    color: green;
+    font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="school">DAV PUBLIC SCHOOL MATHURAPUR</div>
+<div class="sub">Class X – IT (402) | Database Management System</div>
+
+<div id="questionBox"></div>
+<div id="optionsBox"></div>
+
+<div>
+<button onclick="prevQuestion()">⬅ Back</button>
+<button onclick="nextQuestion()">Next ➡</button>
+</div>
+
+<div id="scoreBox"></div>
+
+</div>
+
+<script>
+const questions = [
+ {q:"What does DBMS stand for?", o:["Data Bank Mgmt System","Database Management System","Data Binary Mgmt System","Digital Base Mgmt"], a:1},
+ {q:"Which is DBMS software?", o:["MS Word","Paint","MySQL","Notepad"], a:2},
+ {q:"Rows in table are called?", o:["Fields","Records","Columns","Cells"], a:1},
+ {q:"Columns are known as?", o:["Records","Tables","Fields","Keys"], a:2},
+ {q:"Primary key is used to?", o:["Duplicate data","Identify record","Sort data","Delete data"], a:1},
+ {q:"Primary key cannot have?", o:["Numbers","Letters","Duplicate values","Symbols"], a:2},
+ {q:"Foreign key is used to?", o:["Sort table","Link tables","Delete data","Validate"], a:1},
+ {q:"Repeated data is called?", o:["Validation","Redundancy","Security","Backup"], a:1},
+ {q:"Which data type stores TRUE/FALSE?", o:["Text","Number","Boolean","Date"], a:2},
+ {q:"Which data type stores age?", o:["Text","Number","Boolean","Date"], a:1},
+ {q:"Insert command is used to?", o:["Delete","Add data","Update","View"], a:1},
+ {q:"Delete command removes?", o:["New data","Old data","Table","Field"], a:1},
+ {q:"DBMS reduces?", o:["Accuracy","Speed","Redundancy","Security"], a:2},
+ {q:"Which ensures data security?", o:["Sorting","Authorization","Insert","Delete"], a:1},
+ {q:"A table contains?", o:["Files","Folders","Rows & Columns","Cells"], a:2},
+ {q:"Which key uniquely identifies records?", o:["Foreign","Primary","Secondary","Candidate"], a:1},
+ {q:"DBMS allows data?", o:["Isolation","Sharing","Loss","Deletion"], a:1},
+ {q:"Validation ensures?", o:["Speed","Accuracy","Deletion","Sorting"], a:1},
+ {q:"Which is NOT DBMS function?", o:["Storage","Security","Retrieval","Browsing"], a:3},
+ {q:"An advantage of DBMS is?", o:["Redundancy","Inconsistency","Data sharing","Manual work"], a:2}
+];
+
+let index = 0;
+let score = 0;
+let answered = Array(questions.length).fill(false);
+
+function loadQuestion() {
+    document.getElementById("scoreBox").innerHTML = "";
+    let q = questions[index];
+    document.getElementById("questionBox").innerHTML =
+        "<h3>Q" + (index+1) + ". " + q.q + "</h3>";
+
+    let html = "";
+    q.o.forEach((opt, i) => {
+        html += `<div class="option" onclick="checkAnswer(this,${i})">${opt}</div>`;
+    });
+    document.getElementById("optionsBox").innerHTML = html;
+}
+
+function checkAnswer(el, sel) {
+    if (answered[index]) return;
+    let correct = questions[index].a;
+    let options = document.getElementsByClassName("option");
+
+    if (sel === correct) {
+        el.classList.add("correct");
+        score++;
+    } else {
+        el.classList.add("wrong");
+        options[correct].classList.add("correct");
+    }
+    answered[index] = true;
+}
+
+function nextQuestion() {
+    if (index < questions.length - 1) {
+        index++;
+        loadQuestion();
+    } else {
+        document.getElementById("questionBox").innerHTML = "";
+        document.getElementById("optionsBox").innerHTML = "";
+        document.getElementById("scoreBox").innerHTML =
+            "FINAL SCORE : " + score + " / " + questions.length;
+    }
+}
+
+function prevQuestion() {
+    if (index > 0) {
+        index--;
+        loadQuestion();
+    }
+}
+
+loadQuestion();
+</script>
+
+</body>
+</html>
